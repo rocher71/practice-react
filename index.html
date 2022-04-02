@@ -3,26 +3,25 @@
 <body>
     <div id="root"></div>
 </body>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.17.8/babel.min.js"></script>
     <script type="text/babel">
         const root = document.querySelector("#root");
-        let counter = 0;
-        function countUp(){
-            counter = counter +1;
-            render();
-            //counter값을 업데이트 한 뒤 render해주지 않으면 html에 표시되지 않음
-        }
-        function render(){
-            ReactDOM.render(<Container />, root);
-        }
-        const Container = () => (
+        const App = () => {
+            const data = React.useState(0);
+            //리액트에서 [undefined, function()] 배열을 보내줌
+            //0을 초기값으로 넣어준 후에는 [0, function()] 배열을 보내줌
+            const [counter, modifier] = data;
+            // counter = data[0], modifier = data[1]; 와 같은 코드
+            return (
             <div>
                 <h3>Total Clicks: {counter}</h3>
-                <button onClick={countUp}>Click me</button>
+                <button>Click me</button> 
             </div>
-        );
-        render();
+            );
+        }
+        ReactDOM.render(<App />, root);
+    
     </script>
 </html>
