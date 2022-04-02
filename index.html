@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
+    <body>
     <div id="root"></div>
 </body>
 <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
@@ -14,8 +14,11 @@
             let [counter, setCounter] = React.useState(0);
             // counter = arr[0], modifier = arr[1]; 와 같은 코드
             const onClick = () => {
-                setCounter(counter + 1);
+                //setCounter(counter + 1);
                 //setCounter 함수는 일을 한 후 render를 다시 trigger 함.
+                setCounter((current) => current+1)
+                //counter +1 과 같은 역할을 함 but counter가 다른 곳에서 바뀌었을 수도 있음,
+                //그럴 때 current는 state의 값을 가져와서 바꾸므로 더 안전, 정확
             }
             return (
             <div>
