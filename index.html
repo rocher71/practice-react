@@ -9,15 +9,18 @@
     <script type="text/babel">
         const root = document.querySelector("#root");
         const App = () => {
-            const data = React.useState(0);
             //리액트에서 [undefined, function()] 배열을 보내줌
             //0을 초기값으로 넣어준 후에는 [0, function()] 배열을 보내줌
-            const [counter, modifier] = data;
-            // counter = data[0], modifier = data[1]; 와 같은 코드
+            let [counter, setCounter] = React.useState(0);
+            // counter = arr[0], modifier = arr[1]; 와 같은 코드
+            const onClick = () => {
+                setCounter(counter + 1);
+                //setCounter 함수는 일을 한 후 render를 다시 trigger 함.
+            }
             return (
             <div>
                 <h3>Total Clicks: {counter}</h3>
-                <button>Click me</button> 
+                <button onClick={onClick}>Click me</button> 
             </div>
             );
         }
