@@ -56,9 +56,46 @@
         </div>
       );
     };
-    function KmToMiles() {
-      return <h3>KM 2 M</h3>;
-    }
+    const KmToMiles = () => {
+      const [dist, setDist] = React.useState(0);
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = (event) => {
+        setDist(event.target.value);
+      };
+      const reset = () => setDist(0);
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <label htmlFor="kilometer">Km</label>
+            <input
+              id="kilometer"
+              value={inverted ? (dist * 1.609).toFixed(1) : dist.toFixed(1)}
+              onChange={onChange}
+              type="number"
+              placeholder="Kilometer"
+              disabled={inverted}
+            />
+          </div>
+          <div>
+            <label htmlFor="mile">Mile</label>
+            <input
+              type="number"
+              id="mile"
+              placeholder="Mile"
+              disabled={!inverted}
+              value={inverted ? dist.toFixed(1) : (dist / 1.603).toFixed(1)}
+              onChange={onChange}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onInvert}>Invert</button>
+        </div>
+      );
+    };
     const App = () => {
       //a component can render another component inside of iteself
       const [index, setIndex] = React.useState("xx");
