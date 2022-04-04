@@ -11,40 +11,41 @@
     crossorigin
     src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
   ></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.17.8/babel.min.js"></script>
 
   <script type="text/babel">
     //props is the first and only argument that Btn receives
     //and is the object that receives everything
-    function Btn({ text, onClick }) {
+    function Btn({ text, fontSize = 16 }) {
       //원래 (props) -> shortcut : ({banana})
-      console.log(text, "was rendered");
       return (
         <button
-          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize,
           }}
         >
           {text}
         </button>
       );
     }
-    const MemorizedBtn = React.memo(Btn);
+    // props의 자료형을 지정할 수 있게 해줌, cdn 추가 필요
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+      //Btn의 text 라는 prop은 string : 지키지 않으면 에러 띄움
+      // .isRequired : 해당 prop이 없으면 에러 띄움
+    };
     const App = () => {
-      const [value, setValue] = React.useState("Save Changes");
-      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          {/* Btn({banana:"save changes"}) 이렇게 함수를 호출하는거나 다름 없음 */}
-          {/*여기 들어간 onClick은 eventlistener 아님. 그냥 prop name.*/}
-          {/*props에 function을 보낼 수 있음*/}
-          <MemorizedBtn text={value} onClick={changeValue} />
-          <MemorizedBtn text="Continue" />
+          <Btn text="Save Changes" fontSize={18} />
+          <Btn text="Save Changes" fontSize={15} />
         </div>
       );
     };
