@@ -16,31 +16,35 @@
   <script type="text/babel">
     //props is the first and only argument that Btn receives
     //and is the object that receives everything
-    function Btn({ text, big }) {
+    function Btn({ text, onClick }) {
       //원래 (props) -> shortcut : ({banana})
-      console.log(big);
+      console.log(text, "was rendered");
       return (
         <button
+          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 18 : 16,
-            // prop에서 받은 값에 따라 css 적용
           }}
         >
           {text}
         </button>
       );
     }
+    const MemorizedBtn = React.memo(Btn);
     const App = () => {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
           {/* Btn({banana:"save changes"}) 이렇게 함수를 호출하는거나 다름 없음 */}
-          <Btn text="Save Changes" big={true} />
-          <Btn text="Continue" big={false} />
+          {/*여기 들어간 onClick은 eventlistener 아님. 그냥 prop name.*/}
+          {/*props에 function을 보낼 수 있음*/}
+          <MemorizedBtn text={value} onClick={changeValue} />
+          <MemorizedBtn text="Continue" />
         </div>
       );
     };
